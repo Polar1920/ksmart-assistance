@@ -16,8 +16,7 @@ def predict():
     # Carga del cliente fuera del bloque __name__ == "__main__"
     client = Client("https://lordcoffee-mixtral-chat.hf.space/--replicas/bz3y4/")
     result = client.predict(
-        message=message,
-        api_name="/chat"
+        request.form["message"], api_name="/chat"
     )
     return jsonify({"result": result})
 
