@@ -14,13 +14,9 @@ def home():
 def predict():
     message = request.form["message"]
     # Carga del cliente fuera del bloque __name__ == "__main__"
-    client = Client("PolarO3O/chat-efriend")
+    client = Client("https://lordcoffee-mixtral-chat.hf.space/--replicas/bz3y4/")
     result = client.predict(
         message=message,
-        request=0.9,
-        param_3=256,
-        param_4=0.9,
-        param_5=1.2,
         api_name="/chat"
     )
     return jsonify({"result": result})
