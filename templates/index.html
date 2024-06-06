@@ -41,7 +41,7 @@
 <body>
     <h3><strong>KSmart Assistance - API</strong></h3>
     <br><br>
-    <form action="/predict" method="post">
+    <form id="predictForm">
         <input type="text" id="message" name="message" placeholder="Enter message here">
         <br><br>
         <button type="submit"><strong>Send</strong></button>
@@ -51,7 +51,7 @@
 
     <script>
         const resultDiv = document.getElementById("result");
-        const form = document.querySelector("form");
+        const form = document.getElementById("predictForm");
 
         form.addEventListener("submit", async function (event) {
             event.preventDefault();
@@ -63,7 +63,11 @@
             });
 
             const result = await response.json();
-            resultDiv.textContent = result.result;
+            if (result.error) {
+                resultDiv.textContent = "Error: " + result.error;
+            } else {
+                resultDiv.textContent = result.result;
+            }
         });
     </script>
 </body>
