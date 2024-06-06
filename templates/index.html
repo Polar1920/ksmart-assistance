@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFriend Chat - API</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: whitesmoke;
+        }
+
+        #message {
+            padding: 15px;
+            width: 40%;
+            border: 2px solid rgb(49, 47, 68);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        #result {
+            padding: 15px;
+            width: 40%;
+            border: 2px solid rgb(49, 47, 68);
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h3><strong>EFriend Chat - API</strong></h3>
+    <br><br>
+    <form action="/predict" method="post">
+        <input type="text" id="message" name="message" placeholder="Enter message here">
+        <br><br>
+        <button type="submit"><strong>Send</strong></button>
+    </form>
+    <br><br>
+    <div id="result"></div>
+
+    <script>
+        const resultDiv = document.getElementById("result");
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const response = await fetch("/predict", {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+            resultDiv.textContent = result.result;
+        });
+    </script>
+</body>
+
+</html>
