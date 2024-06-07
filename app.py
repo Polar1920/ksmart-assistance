@@ -13,11 +13,21 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     message = request.form["message"]
-    # Carga del cliente fuera del bloque __name__ == "__main__"
+    
+    # Cargar el cliente de Gradio
     client = Client("https://lordcoffee-mixtral-chat.hf.space/--replicas/bz3y4/")
-    result = client.predict(
-        request.form["message"], api_name="/chat"
-    )
+    
+    # Realizar la predicción
+    result = client.predict(message, api_name="/chat")
+    
+    # Verificar la respuesta de la API
+    if isinstance(result, list) and len(result) > 0:
+        result = result[0]
+    
+    # Asegurarse de que la respuesta es un string
+    if not isinstance(result, str):
+        result = str(result)
+    
     return jsonify({"result": result})
 
 if __name__ == "__main__":
